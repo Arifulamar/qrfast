@@ -4,24 +4,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bulk QR Code Generator</title>
-    <meta name="description" content="Simple and efficient Bulk QR code generator. Create multiple custom QR codes from text or links with an intuitive, easy-to-use interface.">
+    <title>Bulk QR & Barcode Generator</title>
+    <meta name="description" content="Simple and efficient Bulk QR and Barcode generator. Create multiple custom codes from text or links.">
     <meta property="og:url" content="https://ballwictb.github.io/QR-Generator/">
     <meta property="og:type" content="website">
-    <meta property="og:title" content="Bulk QR Code Generator">
-    <meta property="og:description" content="Simple and efficient Bulk QR code generator. Create multiple custom QR codes from text or links with an intuitive, easy-to-use interface.">
+    <meta property="og:title" content="Bulk QR & Barcode Generator">
+    <meta property="og:description" content="Simple and efficient Bulk QR and Barcode generator. Create multiple custom codes from text or links.">
     
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Ballwictb/font-awesome-sixball-v2@main/six-rp/css/all.min.css">
+    
+    <!-- Libraries for QR and Barcode -->
     <script src="https://cdn.jsdelivr.net/npm/qrious@4.0.2/dist/qrious.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+    
     <link rel="stylesheet" href="./css/style.css">
     <link rel="shortcut icon" href="./img/logo.ico" type="image/x-icon">
     
     <style>
-        /* Tambahan style agar tampilan grid QR code rapi */
         .qr-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
             gap: 20px;
             margin-top: 20px;
         }
@@ -58,43 +61,55 @@
 
 <body>
     <div class="container my-4">
-        <h1><i class="fas fa-qrcode me-2"></i>PEMBUAT QR CODE LANGSUNG BANYAK MUDAH</h1>
+        <h1 id="mainTitle"><i class="fas fa-qrcode me-2"></i>PEMBUAT QR CODE & BARCODE MASSAL</h1>
         <div class="row">
             <div class="col-md-5">
+                <!-- Mode Switcher -->
                 <div class="mb-3">
-                    <label for="urlInput" class="form-label"><i class="fas fa-links me-2"></i>URLs / Links (One per line, max 100)</label>
-                    <textarea class="form-control" id="urlInput" rows="8" placeholder="Enter one URL per line&#10;https://example1.com&#10;https://example2.com" oninput="generateBulkQR()"></textarea>
-                    <div id="countInfo" class="form-text text-end">0 / 100 links</div>
+                    <label class="form-label fw-bold"><i class="fas fa-sliders-h me-2"></i>Pilih Mode</label>
+                    <select class="form-select border-primary" id="modeSelect" onchange="toggleMode()">
+                        <option value="qr" selected>QR Code Generator</option>
+                        <option value="barcode">Barcode 1D Generator (CODE128)</option>
+                    </select>
                 </div>
+
                 <div class="mb-3">
-                    <label for="sizeInput" class="form-label"><i class="fas fa-expand-arrows-alt me-2"></i>Size (px)</label>
-                    <input type="range" class="form-range" id="sizeInput" value="200" min="100" max="400" oninput="generateBulkQR()">
+                    <label for="urlInput" class="form-label" id="inputLabel"><i class="fas fa-link me-2"></i>URLs / Text (Satu per baris, max 100)</label>
+                    <textarea class="form-control" id="urlInput" rows="8" placeholder="Masukkan satu teks/URL per baris&#10;ITEM001&#10;ITEM002" oninput="generateBulk()"></textarea>
+                    <div id="countInfo" class="form-text text-end">0 / 100 baris</div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="sizeInput" class="form-label"><i class="fas fa-expand-arrows-alt me-2"></i>Ukuran / Tinggi (px)</label>
+                    <input type="range" class="form-range" id="sizeInput" value="200" min="100" max="400" oninput="generateBulk()">
                     <output for="sizeInput" id="sizeOutput">200</output>
                 </div>
+
                 <div class="mb-3">
-                    <label for="fgColor" class="form-label"><i class="fas fa-fill-drip me-2"></i>QR Color</label>
-                    <input type="color" class="form-control form-control-color w-100" id="fgColor" value="#000000" oninput="generateBulkQR()">
+                    <label for="fgColor" class="form-label"><i class="fas fa-fill-drip me-2"></i>Warna Kode</label>
+                    <input type="color" class="form-control form-control-color w-100" id="fgColor" value="#000000" oninput="generateBulk()">
                 </div>
+
                 <div class="mb-3">
-                    <label for="bgColor" class="form-label"><i class="fas fa-fill me-2"></i>Background Color</label>
-                    <input type="color" class="form-control form-control-color w-100" id="bgColor" value="#ffffff" oninput="generateBulkQR()">
+                    <label for="bgColor" class="form-label"><i class="fas fa-fill me-2"></i>Warna Latar Belakang</label>
+                    <input type="color" class="form-control form-control-color w-100" id="bgColor" value="#ffffff" oninput="generateBulk()">
                 </div>
-                <!-- Center Image feature wrapper -->
-                <div class="mb-3">
-                    <label for="imageInput" class="form-label"><i class="fas fa-image me-2"></i>Center Image</label>
-                    <input type="file" class="form-control" id="imageInput" accept="image/*" onchange="generateBulkQR()">
+
+                <!-- Wrapper Center Image (Khusus QR Code) -->
+                <div class="mb-3" id="centerImageWrapper">
+                    <label for="imageInput" class="form-label"><i class="fas fa-image me-2"></i>Gambar Tengah (Khusus QR)</label>
+                    <input type="file" class="form-control" id="imageInput" accept="image/*" onchange="generateBulk()">
                 </div>
             </div>
             
             <div class="col-md-7">
                 <div class="d-flex gap-2 mb-3">
-                    <button class="btn btn-primary flex-grow-1" onclick="downloadAllQR()">
-                        <i class="fas fa-download me-2"></i>Download All (ZIP/PNG)
+                    <button class="btn btn-primary flex-grow-1" onclick="downloadAll()">
+                        <i class="fas fa-download me-2"></i>Download Semua (ZIP/PNG)
                     </button>
                 </div>
-                <!-- Tempat QR Code akan di-generate secara massal -->
                 <div id="qrContainer" class="qr-grid">
-                    <!-- QR Items akan muncul di sini via JavaScript -->
+                    <!-- Item Canvas diproduksi via JS -->
                 </div>
             </div>
         </div>
@@ -109,10 +124,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
     
     <script>
-        // Logika Generator Bulk QR dengan Tombol Download Individual
         let logoImage = null;
 
-        // Listener untuk handle upload logo center
         document.getElementById('imageInput').addEventListener('change', function(e) {
             const file = e.target.files[0];
             if (file) {
@@ -121,18 +134,31 @@
                     const img = new Image();
                     img.onload = function() {
                         logoImage = img;
-                        generateBulkQR();
+                        generateBulk();
                     };
                     img.src = event.target.result;
                 };
                 reader.readAsDataURL(file);
             } else {
                 logoImage = null;
-                generateBulkQR();
+                generateBulk();
             }
         });
 
-        function generateBulkQR() {
+        function toggleMode() {
+            const mode = document.getElementById('modeSelect').value;
+            const centerImageWrapper = document.getElementById('centerImageWrapper');
+            
+            if (mode === 'barcode') {
+                centerImageWrapper.style.display = 'none';
+            } else {
+                centerImageWrapper.style.display = 'block';
+            }
+            generateBulk();
+        }
+
+        function generateBulk() {
+            const mode = document.getElementById('modeSelect').value;
             const urlInput = document.getElementById('urlInput').value;
             const sizeInput = parseInt(document.getElementById('sizeInput').value);
             const fgColor = document.getElementById('fgColor').value;
@@ -142,84 +168,89 @@
             
             document.getElementById('sizeOutput').value = sizeInput;
 
-            // Split baris teks, filter baris kosong
             const links = urlInput.split('\n').map(line => line.trim()).filter(line => line !== "");
-            
-            // Batasi maksimal 100 links
             const limitedLinks = links.slice(0, 100);
-            countInfo.textContent = `${limitedLinks.length} / 100 links`;
+            countInfo.textContent = `${limitedLinks.length} / 100 baris`;
 
             qrContainer.innerHTML = '';
 
             limitedLinks.forEach((link, index) => {
-                // 1. Buat Kontainer Item QR
                 const qrItem = document.createElement('div');
                 qrItem.className = 'qr-item';
 
-                // 2. Buat Canvas untuk QR
                 const canvas = document.createElement('canvas');
-                canvas.id = `qr-canvas-${index}`;
+                canvas.id = `code-canvas-${index}`;
                 qrItem.appendChild(canvas);
 
-                // 3. Render QR Code menggunakan QRious
-                const qr = new QRious({
-                    element: canvas,
-                    value: link,
-                    size: sizeInput,
-                    foreground: fgColor,
-                    background: bgColor,
-                    level: 'H' // Set ke High correction agar aman jika ditumpuk logo ditengah
-                });
+                if (mode === 'qr') {
+                    // Generate QR Code
+                    const qr = new QRious({
+                        element: canvas,
+                        value: link,
+                        size: sizeInput,
+                        foreground: fgColor,
+                        background: bgColor,
+                        level: 'H'
+                    });
 
-                // 4. Jika ada gambar logo, gambar ke tengah canvas
-                if (logoImage) {
-                    const ctx = canvas.getContext('2d');
-                    const logoSize = sizeInput * 0.2; // Ukuran logo 20% dari ukuran QR
-                    const x = (sizeInput - logoSize) / 2;
-                    const y = (sizeInput - logoSize) / 2;
-                    
-                    // Tambahkan background putih kecil di belakang logo agar QR code tidak mengganggu logo
-                    ctx.fillStyle = bgColor;
-                    ctx.fillRect(x - 2, y - 2, logoSize + 4, logoSize + 4);
-                    
-                    ctx.drawImage(logoImage, x, y, logoSize, logoSize);
+                    if (logoImage) {
+                        const ctx = canvas.getContext('2d');
+                        const logoSize = sizeInput * 0.2;
+                        const x = (sizeInput - logoSize) / 2;
+                        const y = (sizeInput - logoSize) / 2;
+                        
+                        ctx.fillStyle = bgColor;
+                        ctx.fillRect(x - 2, y - 2, logoSize + 4, logoSize + 4);
+                        ctx.drawImage(logoImage, x, y, logoSize, logoSize);
+                    }
+                } else {
+                    // Generate 1D Barcode (CODE128)
+                    try {
+                        JsBarcode(canvas, link, {
+                            format: "CODE128",
+                            lineColor: fgColor,
+                            background: bgColor,
+                            height: Math.floor(sizeInput * 0.5),
+                            displayValue: true,
+                            fontSize: 14,
+                            margin: 10
+                        });
+                    } catch (e) {
+                        console.error("Barcode generation error:", e);
+                    }
                 }
 
-                // 5. Tambahkan teks link (potong jika terlalu panjang)
                 const linkText = document.createElement('div');
                 linkText.className = 'qr-link-text';
                 linkText.textContent = link;
                 qrItem.appendChild(linkText);
 
-                // 6. Buat Tombol Download Individual
                 const downloadBtn = document.createElement('button');
                 downloadBtn.className = 'btn btn-sm btn-outline-success w-100 mt-auto';
                 downloadBtn.innerHTML = '<i class="fas fa-download me-1"></i> Download';
                 downloadBtn.onclick = function() {
-                    downloadSingleQR(canvas, `qr-code-${index + 1}`);
+                    downloadSingle(canvas, `${mode}-${index + 1}`);
                 };
                 qrItem.appendChild(downloadBtn);
 
-                // Masukkan item ke dalam grid container
                 qrContainer.appendChild(qrItem);
             });
         }
 
-        // Fungsi download untuk satu QR Code saja
-        function downloadSingleQR(canvas, filename) {
+        function downloadSingle(canvas, filename) {
             const link = document.createElement('a');
             link.download = `${filename}.png`;
             link.href = canvas.toDataURL('image/png');
             link.click();
         }
 
-        // Fungsi download massal menggunakan JSZip
-        function downloadAllQR() {
+        function downloadAll() {
             const zip = new JSZip();
             const qrItems = document.querySelectorAll('.qr-item');
+            const mode = document.getElementById('modeSelect').value;
             
             if (qrItems.length === 0) {
-                alert('Tidak ada QR code untuk di-download.');
+                alert('Tidak ada kode untuk di-download.');
                 return;
             }
 
@@ -227,9 +258,8 @@
                 const canvas = item.querySelector('canvas');
                 const linkText = item.querySelector('.qr-link-text').textContent;
                 
-                // Bersihkan nama file dari karakter ilegal agar aman disimpan di OS
                 let safeName = linkText.replace(/[^a-z0-9]/gi, '_').toLowerCase().slice(0, 30);
-                if (!safeName) safeName = `qr-code-${index + 1}`;
+                if (!safeName) safeName = `${mode}-${index + 1}`;
 
                 const dataUrl = canvas.toDataURL('image/png');
                 const base64Data = dataUrl.replace(/^data:image\/(png|jpg);base64,/, "");
@@ -238,7 +268,7 @@
             });
 
             zip.generateAsync({ type: 'blob' }).then(function(content) {
-                saveAs(content, 'bulk-qr-codes.zip');
+                saveAs(content, `bulk-${mode}-codes.zip`);
             });
         }
     </script>
