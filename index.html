@@ -1,26 +1,124 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bulk QR & Barcode Generator</title>
-    <meta name="description" content="Simple and efficient Bulk QR and Barcode generator. Create multiple custom codes from text or links.">
-    <meta property="og:url" content="https://ballwictb.github.io/QR-Generator/">
+    <title>QRFast – Generator QR Code Massal Gratis Hingga 100 Data</title>
+    <meta name="description" content="Buat hingga 100 QR Code atau barcode sekaligus secara gratis. Tambahkan logo, atur warna, lalu download hasil dalam PNG atau ZIP.">
+    <meta name="author" content="Ariful Amar">
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    <meta name="theme-color" content="#0d6efd">
+    <link rel="canonical" href="https://qrcodemassal.id/">
+
     <meta property="og:type" content="website">
-    <meta property="og:title" content="Bulk QR & Barcode Generator">
-    <meta property="og:description" content="Simple and efficient Bulk QR and Barcode generator. Create multiple custom codes from text or links.">
-    
+    <meta property="og:locale" content="id_ID">
+    <meta property="og:site_name" content="QRFast">
+    <meta property="og:url" content="https://qrcodemassal.id/">
+    <meta property="og:title" content="QRFast – Generator QR Code & Barcode Massal Gratis">
+    <meta property="og:description" content="Buat hingga 100 QR Code atau barcode sekaligus, tambahkan logo dan warna, lalu download semuanya dalam satu file ZIP.">
+    <meta property="og:image" content="https://qrcodemassal.id/img/qrfast-social.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="QRFast, generator QR Code dan barcode massal gratis">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="QRFast – Generator QR Code & Barcode Massal Gratis">
+    <meta name="twitter:description" content="Buat hingga 100 QR Code atau barcode sekaligus dan download hasilnya dalam PNG atau ZIP.">
+    <meta name="twitter:image" content="https://qrcodemassal.id/img/qrfast-social.png">
+    <meta name="twitter:image:alt" content="QRFast, generator QR Code dan barcode massal gratis">
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": "WebApplication",
+                "@id": "https://qrcodemassal.id/#application",
+                "name": "QRFast",
+                "url": "https://qrcodemassal.id/",
+                "description": "Generator QR Code dan barcode massal gratis hingga 100 data sekaligus.",
+                "applicationCategory": "UtilitiesApplication",
+                "operatingSystem": "Any",
+                "browserRequirements": "Requires JavaScript",
+                "inLanguage": "id-ID",
+                "offers": {
+                    "@type": "Offer",
+                    "price": "0",
+                    "priceCurrency": "IDR"
+                },
+                "featureList": [
+                    "Membuat hingga 100 QR Code sekaligus",
+                    "Membuat barcode CODE128",
+                    "Menambahkan logo pada QR Code",
+                    "Mengatur warna dan ukuran kode",
+                    "Download PNG dan ZIP"
+                ],
+                "author": {
+                    "@type": "Person",
+                    "name": "Ariful Amar"
+                }
+            },
+            {
+                "@type": "FAQPage",
+                "@id": "https://qrcodemassal.id/#faq",
+                "mainEntity": [
+                    {
+                        "@type": "Question",
+                        "name": "Apa itu QRFast?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "QRFast adalah generator QR Code dan barcode massal gratis berbasis web yang dapat digunakan tanpa instalasi."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "Berapa banyak QR Code yang dapat dibuat sekaligus?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "QRFast dapat membuat hingga 100 QR Code atau barcode sekaligus dari data yang dimasukkan satu per baris."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "Apakah QRFast gratis?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Ya. Semua fitur utama QRFast dapat digunakan secara gratis."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "Apakah data dikirim ke server?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Tidak. Pembuatan QR Code dan barcode diproses langsung di browser pengguna."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "Apakah QR Code dapat diberi logo?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Ya. Pengguna dapat menambahkan gambar atau logo di tengah QR Code sebelum mengunduhnya."
+                        }
+                    }
+                ]
+            }
+        ]
+    }
+    </script>
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Ballwictb/font-awesome-sixball-v2@main/six-rp/css/all.min.css">
-    
+
     <!-- Libraries for QR and Barcode -->
     <script src="https://cdn.jsdelivr.net/npm/qrious@4.0.2/dist/qrious.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
-    
+
     <link rel="stylesheet" href="./css/style.css">
     <link rel="shortcut icon" href="./img/logo.ico" type="image/x-icon">
-    
+
     <style>
         .qr-grid {
             display: grid;
@@ -60,8 +158,15 @@
 </head>
 
 <body>
-    <div class="container my-4">
-        <h1 id="mainTitle"><i class="fas fa-qrcode me-2"></i>PEMBUAT QR CODE & BARCODE MASSAL</h1>
+    <main class="container my-4">
+        <header class="hero-section text-center">
+            <span class="brand-label">QRFAST</span>
+            <h1 id="mainTitle"><i class="fas fa-qrcode me-2" aria-hidden="true"></i>Generator QR Code &amp; Barcode Massal Gratis</h1>
+            <p class="lead hero-description">Buat hingga 100 QR Code atau barcode sekaligus dari URL, teks, kode barang, atau data lainnya. Atur warna, tambahkan logo, lalu download dalam format PNG atau ZIP.</p>
+        </header>
+
+        <section class="generator-section" aria-labelledby="generatorHeading">
+            <h2 id="generatorHeading" class="visually-hidden">Buat QR Code atau Barcode</h2>
         <div class="row">
             <div class="col-md-5">
                 <!-- Mode Switcher -->
@@ -101,10 +206,10 @@
                     <input type="file" class="form-control" id="imageInput" accept="image/*" onchange="generateBulk()">
                 </div>
             </div>
-            
+
             <div class="col-md-7">
                 <div class="d-flex gap-2 mb-3">
-                    <button class="btn btn-primary flex-grow-1" onclick="downloadAll()">
+                    <button type="button" class="btn btn-primary flex-grow-1" onclick="downloadAll()">
                         <i class="fas fa-download me-2"></i>Download Semua (ZIP/PNG)
                     </button>
                 </div>
@@ -113,16 +218,78 @@
                 </div>
             </div>
         </div>
-        
+        </section>
+
+        <section class="seo-content" aria-labelledby="aboutHeading">
+            <div class="row g-4">
+                <div class="col-lg-7">
+                    <h2 id="aboutHeading">Generator QR Code Massal yang Cepat dan Praktis</h2>
+                    <p>QRFast membantu Anda membuat banyak QR Code sekaligus tanpa mengulang proses satu per satu. Cukup masukkan setiap URL atau teks pada baris berbeda, pilih tampilan yang diinginkan, dan hasil akan dibuat langsung di browser.</p>
+
+                    <h2>Fitur QRFast</h2>
+                    <ul class="feature-list">
+                        <li>Membuat hingga 100 QR Code sekaligus</li>
+                        <li>Generator barcode 1D berformat CODE128</li>
+                        <li>Menambahkan logo atau gambar di tengah QR Code</li>
+                        <li>Mengatur ukuran, warna kode, dan warna latar</li>
+                        <li>Download satu per satu dalam PNG atau sekaligus dalam ZIP</li>
+                        <li>Diproses langsung di browser tanpa mengirim data ke server</li>
+                    </ul>
+                </div>
+
+                <div class="col-lg-5">
+                    <div class="how-to-card">
+                        <h2>Cara Membuat QR Code Massal</h2>
+                        <ol>
+                            <li>Masukkan URL atau teks, satu data per baris.</li>
+                            <li>Pilih mode QR Code atau barcode CODE128.</li>
+                            <li>Atur ukuran, warna, dan logo bila diperlukan.</li>
+                            <li>Periksa hasil yang tampil otomatis.</li>
+                            <li>Download satu gambar atau seluruh hasil dalam ZIP.</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="faq-section" aria-labelledby="faqHeading">
+            <h2 id="faqHeading">Pertanyaan yang Sering Diajukan</h2>
+            <div class="accordion" id="faqAccordion">
+                <div class="accordion-item">
+                    <h3 class="accordion-header"><button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faqOne" aria-expanded="true" aria-controls="faqOne">Apa itu QRFast?</button></h3>
+                    <div id="faqOne" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion"><div class="accordion-body">QRFast adalah generator QR Code dan barcode massal gratis berbasis web yang dapat digunakan tanpa instalasi.</div></div>
+                </div>
+                <div class="accordion-item">
+                    <h3 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqTwo" aria-expanded="false" aria-controls="faqTwo">Berapa banyak QR Code yang dapat dibuat sekaligus?</button></h3>
+                    <div id="faqTwo" class="accordion-collapse collapse" data-bs-parent="#faqAccordion"><div class="accordion-body">Anda dapat membuat hingga 100 QR Code atau barcode sekaligus dengan memasukkan satu data pada setiap baris.</div></div>
+                </div>
+                <div class="accordion-item">
+                    <h3 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqThree" aria-expanded="false" aria-controls="faqThree">Apakah QRFast gratis?</button></h3>
+                    <div id="faqThree" class="accordion-collapse collapse" data-bs-parent="#faqAccordion"><div class="accordion-body">Ya. Semua fitur utama QRFast dapat digunakan secara gratis.</div></div>
+                </div>
+                <div class="accordion-item">
+                    <h3 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqFour" aria-expanded="false" aria-controls="faqFour">Apakah data dikirim ke server?</button></h3>
+                    <div id="faqFour" class="accordion-collapse collapse" data-bs-parent="#faqAccordion"><div class="accordion-body">Tidak. Pembuatan QR Code dan barcode berlangsung langsung di browser Anda. Data tidak dikirim ke server QRFast.</div></div>
+                </div>
+                <div class="accordion-item">
+                    <h3 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqFive" aria-expanded="false" aria-controls="faqFive">Apakah QR Code dapat diberi logo?</button></h3>
+                    <div id="faqFive" class="accordion-collapse collapse" data-bs-parent="#faqAccordion"><div class="accordion-body">Ya. Pilih gambar pada kolom “Gambar Tengah”, lalu QRFast akan menempatkannya di tengah QR Code.</div></div>
+                </div>
+            </div>
+        </section>
+
+        <noscript><div class="alert alert-warning mt-4">QRFast memerlukan JavaScript agar dapat membuat dan mengunduh QR Code atau barcode.</div></noscript>
+
         <footer class="mt-5">
-            <p>&copy; 2026 sixball-QR Modified By Ariful Amar</p>
+            <p>&copy; 2026 QRFast — Dikembangkan oleh Ariful Amar.</p>
         </footer>
-    </div>
+    </main>
 
     <!-- Scripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
-    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
     <script>
         let logoImage = null;
 
@@ -148,7 +315,7 @@
         function toggleMode() {
             const mode = document.getElementById('modeSelect').value;
             const centerImageWrapper = document.getElementById('centerImageWrapper');
-            
+
             if (mode === 'barcode') {
                 centerImageWrapper.style.display = 'none';
             } else {
@@ -165,7 +332,7 @@
             const bgColor = document.getElementById('bgColor').value;
             const qrContainer = document.getElementById('qrContainer');
             const countInfo = document.getElementById('countInfo');
-            
+
             document.getElementById('sizeOutput').value = sizeInput;
 
             const links = urlInput.split('\n').map(line => line.trim()).filter(line => line !== "");
@@ -198,7 +365,7 @@
                         const logoSize = sizeInput * 0.2;
                         const x = (sizeInput - logoSize) / 2;
                         const y = (sizeInput - logoSize) / 2;
-                        
+
                         ctx.fillStyle = bgColor;
                         ctx.fillRect(x - 2, y - 2, logoSize + 4, logoSize + 4);
                         ctx.drawImage(logoImage, x, y, logoSize, logoSize);
@@ -248,7 +415,7 @@
             const zip = new JSZip();
             const qrItems = document.querySelectorAll('.qr-item');
             const mode = document.getElementById('modeSelect').value;
-            
+
             if (qrItems.length === 0) {
                 alert('Tidak ada kode untuk di-download.');
                 return;
@@ -257,13 +424,13 @@
             qrItems.forEach((item, index) => {
                 const canvas = item.querySelector('canvas');
                 const linkText = item.querySelector('.qr-link-text').textContent;
-                
+
                 let safeName = linkText.replace(/[^a-z0-9]/gi, '_').toLowerCase().slice(0, 30);
                 if (!safeName) safeName = `${mode}-${index + 1}`;
 
                 const dataUrl = canvas.toDataURL('image/png');
                 const base64Data = dataUrl.replace(/^data:image\/(png|jpg);base64,/, "");
-                
+
                 zip.file(`${index + 1}_${safeName}.png`, base64Data, { base64: true });
             });
 
