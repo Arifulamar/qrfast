@@ -274,3 +274,20 @@ footer p {
 @media(max-width:767.98px){
 .site-header{top:6px;margin-bottom:18px}.site-nav{margin:0 4px;border-radius:15px;padding:8px 10px 8px 13px}.nav-toggle{display:grid;place-items:center}.nav-menu{display:none;position:absolute;left:4px;right:4px;top:74px;padding:10px;background:#fff;border:1px solid #e2e8f0;border-radius:15px;box-shadow:0 15px 35px rgba(15,23,42,.12);flex-direction:column;align-items:stretch}.nav-menu.show{display:flex}.nav-link{padding:12px 14px!important}.nav-cta{margin:4px 0 0;padding:12px 14px;justify-content:center}.brand-icon{width:36px;height:36px}.nav-brand{font-size:1.2rem}
 }
+
+/* Layout fix: header and main must stack vertically */
+body {
+    flex-direction: column;
+    align-items: center;
+}
+
+.site-header {
+    width: 100%;
+}
+
+@media (max-width: 767.98px) {
+    body {
+        flex-direction: column;
+        align-items: center;
+    }
+}
