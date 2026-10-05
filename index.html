@@ -157,7 +157,23 @@
     </style>
 </head>
 
-<body><nav class="qrfast-nav" aria-label="Navigasi utama"><div><a href="./" class="active">Generator QR</a><a href="./blog/">Blog</a></div></nav>
+<body><header class="site-header">
+  <nav class="site-nav" aria-label="Navigasi utama">
+    <a class="nav-brand" href="./" aria-label="QRFast Beranda">
+      <span class="brand-icon"><i class="fas fa-qrcode" aria-hidden="true"></i></span>
+      <span><strong>QR</strong>Fast</span>
+    </a>
+    <button class="nav-toggle" type="button" aria-label="Buka menu" aria-expanded="false" onclick="toggleQRNav()">
+      <i class="fas fa-bars" aria-hidden="true"></i>
+    </button>
+    <div class="nav-menu" id="qrNavMenu">
+      <a class="nav-link active" href="./"><i class="fas fa-qrcode"></i> Generator</a>
+      <a class="nav-link" href="./blog/"><i class="fas fa-newspaper"></i> Blog</a>
+      <a class="nav-link" href="./#aboutHeading"><i class="fas fa-circle-info"></i> Tentang</a>
+      <a class="nav-cta" href="./"><i class="fas fa-bolt"></i> Buat QR Sekarang</a>
+    </div>
+  </nav>
+</header>
     <main class="container my-4">
         <header class="hero-section text-center">
             <span class="brand-label">QRFAST</span>
@@ -439,6 +455,9 @@
             });
         }
     </script>
-</body>
+<script>
+function toggleQRNav(){const b=document.querySelector('.nav-toggle'),m=document.getElementById('qrNavMenu');const open=m.classList.toggle('show');b.setAttribute('aria-expanded',open?'true':'false');b.innerHTML=open?'<i class="fas fa-times" aria-hidden="true"></i>':'<i class="fas fa-bars" aria-hidden="true"></i>';}
+document.querySelectorAll('#qrNavMenu a').forEach(a=>a.addEventListener('click',()=>{document.getElementById('qrNavMenu').classList.remove('show');document.querySelector('.nav-toggle').setAttribute('aria-expanded','false');document.querySelector('.nav-toggle').innerHTML='<i class="fas fa-bars" aria-hidden="true"></i>';}));
+</script></body>
 
 </html>
